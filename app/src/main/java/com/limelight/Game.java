@@ -120,7 +120,11 @@ public class Game extends Activity implements SurfaceHolder.Callback,
     private SpinnerDialog spinner;
     private boolean displayedFailureDialog = false;
     private boolean connecting = false;
+    public static Game instance = null;
     private boolean connected = false;
+    public boolean isConnected() {
+        return connected;
+    }
     private boolean autoEnterPip = false;
     private boolean surfaceCreated = false;
     private boolean attemptedConnection = false;
@@ -184,6 +188,7 @@ public class Game extends Activity implements SurfaceHolder.Callback,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
 
         UiHelper.setLocale(this);
 
@@ -1035,6 +1040,7 @@ public class Game extends Activity implements SurfaceHolder.Callback,
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        instance = null;
 
         if (controllerHandler != null) {
             controllerHandler.destroy();
