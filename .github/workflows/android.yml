@@ -26,14 +26,11 @@ jobs:
       run: |
         export ANDROID_HOME=${ANDROID_HOME:-/usr/local/lib/android/sdk}
         export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
-        echo "Accepting licenses and installing NDK 26.2..."
+        echo "Accepting licenses..."
         yes | sdkmanager --licenses || true
-        yes | sdkmanager "ndk;26.2.11394342" "build-tools;34.0.0" "platforms;android-34" || true
-        NDK_DIR=$(find $ANDROID_HOME/ndk -maxdepth 1 -name "26.2.*" 2>/dev/null | head -n 1)
-        if [ -z "$NDK_DIR" ]; then NDK_DIR="$ANDROID_HOME/ndk/26.2.11394342"; fi
-        echo "ndk.dir=$NDK_DIR" > local.properties
-        echo "sdk.dir=$ANDROID_HOME" >> local.properties
-        cat local.properties
+        echo "Installing NDK 29.0.14206865 and platform 37..."
+        yes | sdkmanager "ndk;29.0.14206865" "platforms;android-37" || true
+        echo "sdk.dir=$ANDROID_HOME" > local.properties
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
